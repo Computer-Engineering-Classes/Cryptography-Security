@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class Utils {
+public class HashingUtils {
 
     static public void printByteArray(String s, byte[] array) {
 
@@ -12,8 +12,8 @@ public class Utils {
         for (byte b : array) {
             sb.append(String.format("%02x", b));
         }
-        System.out.print("\n" + s + ": " + sb);
-        System.out.println("\nSize: " + array.length * 8 + " bits");
+        System.out.printf("\n%s: %s", s, sb);
+        System.out.printf("\nSize: %d bits%n", array.length * 8);
     }
 
     static public String ByteArrayToString(byte[] array) {
@@ -29,9 +29,8 @@ public class Utils {
         StringBuilder sb = new StringBuilder();
         File file = new File(fileName);
         try (FileInputStream fis = new FileInputStream(file)) {
-            int r;
-            while ((r = fis.read()) != -1) {
-                sb.append((char) r);
+            while (fis.available() > 0) {
+                sb.append((char) fis.read());
             }
         }
         return sb.toString();

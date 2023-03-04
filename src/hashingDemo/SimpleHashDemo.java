@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class SimpleHashDemo {
-    public static void hashingTextDemo() throws NoSuchAlgorithmException, IOException {
+    static void hashingTextDemo() throws NoSuchAlgorithmException, IOException {
         System.out.println("Directional:");
         hashText("The quick brown fox jumps over the lazy dog.");
 
@@ -19,7 +19,7 @@ public class SimpleHashDemo {
         hashText("The quick brown fox jumps over the lazy dog and the lazy cat.");
 
         String file = "C:\\Users\\diogo\\Desktop\\Cryptography-Security\\README.md";
-        String text = Utils.readFile(file);
+        String text = HashingUtils.readFile(file);
         System.out.println("File: " + file);
         System.out.println("Content: " + text);
         hashText(text);
@@ -29,7 +29,7 @@ public class SimpleHashDemo {
         MessageDigest digester = MessageDigest.getInstance("SHA-256");
         byte[] input = s.getBytes();
         byte[] digest = digester.digest(input);
-        Utils.printByteArray("Digest", digest);
+        HashingUtils.printByteArray("Digest", digest);
     }
 
     public static void main(String[] args) {
