@@ -1,10 +1,11 @@
-package hashingDemo;
+package hashing;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class SimpleHashDemo {
+public class HashDemo {
     static void hashingTextDemo() throws NoSuchAlgorithmException, IOException {
         System.out.println("Directional:");
         hashText("The quick brown fox jumps over the lazy dog.");
@@ -23,6 +24,19 @@ public class SimpleHashDemo {
         System.out.println("File: " + file);
         System.out.println("Content: " + text);
         hashText(text);
+    }
+
+    private static String hashFile(String fileName, String algorithm) throws NoSuchAlgorithmException, IOException {
+        MessageDigest digester = MessageDigest.getInstance(algorithm);
+        FileInputStream fis = new FileInputStream(fileName);
+        byte[] byteArray = new byte[512];
+        int bytesCount;
+        while ((bytesCount = fis.read(byteArray)) != -1) {
+            digester.update(byteArray, 0, bytesCount);
+        }
+        fis.close();
+        byte[] digest = digester.digest();
+        return HashingUtils.ByteArrayToString(digest);
     }
 
     private static void hashText(String s) throws NoSuchAlgorithmException {

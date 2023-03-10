@@ -1,4 +1,4 @@
-package hashingDemo;
+package hashing;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,13 +7,12 @@ import java.io.IOException;
 public class HashingUtils {
 
     static public void printByteArray(String s, byte[] array) {
-
         StringBuilder sb = new StringBuilder();
         for (byte b : array) {
             sb.append(String.format("%02x", b));
         }
         System.out.printf("\n%s: %s", s, sb);
-        System.out.printf("\nSize: %d bits%n", array.length * 8);
+        System.out.printf("\nSize: %d bits\n", array.length * 8);
     }
 
     static public String ByteArrayToString(byte[] array) {
