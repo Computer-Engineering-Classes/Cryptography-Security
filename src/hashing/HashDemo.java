@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashDemo {
-    static void hashingTextDemo() throws NoSuchAlgorithmException, IOException {
+    public static void hashingTextDemo() throws NoSuchAlgorithmException, IOException {
         System.out.println("Directional:");
         hashText("The quick brown fox jumps over the lazy dog.");
 
@@ -18,12 +18,6 @@ public class HashDemo {
 
         System.out.println("Fixed length:");
         hashText("The quick brown fox jumps over the lazy dog and the lazy cat.");
-
-        String file = "C:\\Users\\diogo\\Desktop\\Cryptography-Security\\README.md";
-        String text = HashingUtils.readFile(file);
-        System.out.println("File: " + file);
-        System.out.println("Content: " + text);
-        hashText(text);
     }
 
     private static String hashFile(String fileName, String algorithm) throws NoSuchAlgorithmException, IOException {
@@ -36,19 +30,22 @@ public class HashDemo {
         }
         fis.close();
         byte[] digest = digester.digest();
-        return HashingUtils.ByteArrayToString(digest);
+        return HashUtils.bytesToString(digest);
     }
 
     private static void hashText(String s) throws NoSuchAlgorithmException {
         MessageDigest digester = MessageDigest.getInstance("SHA-256");
         byte[] input = s.getBytes();
         byte[] digest = digester.digest(input);
-        HashingUtils.printByteArray("Digest", digest);
+        HashUtils.printBytes("Digest", digest);
     }
 
     public static void main(String[] args) {
         try {
             hashingTextDemo();
+            String fileName = "src\\hashing\\HashDemo.java";
+            System.out.println("File: " + fileName);
+            System.out.println("\nSHA-256: " + hashFile(fileName, "SHA-256"));
         } catch (NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
         }

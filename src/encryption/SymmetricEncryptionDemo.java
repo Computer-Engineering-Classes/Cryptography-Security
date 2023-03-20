@@ -1,6 +1,6 @@
 package encryption;
 
-import hashing.HashingUtils;
+import hashing.HashUtils;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
@@ -11,7 +11,7 @@ public class SymmetricEncryptionDemo {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(keysize);
         Key key = keyGen.generateKey();
-        HashingUtils.printByteArray("Key", key.getEncoded());
+        HashUtils.printBytes("Key", key.getEncoded());
 
         byte[] plainText = "Hello World!".repeat(4).getBytes();
         System.out.println("Input: " + new String(plainText));
@@ -25,11 +25,11 @@ public class SymmetricEncryptionDemo {
             byte[] iv = new byte[16];
             random.nextBytes(iv);
             IvParameterSpec ivSpec = new IvParameterSpec(iv);
-            HashingUtils.printByteArray("IvSpec", ivSpec.getIV());
+            HashUtils.printBytes("IvSpec", ivSpec.getIV());
             cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
             // Encrypt the message
             cipherText = cipher.doFinal(plainText);
-            HashingUtils.printByteArray("CipherText", cipherText);
+            HashUtils.printBytes("CipherText", cipherText);
             // Decrypt the message, given derived key and initialization vector
             cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
         } else {
@@ -38,12 +38,12 @@ public class SymmetricEncryptionDemo {
             // Encrypt the message
             cipherText = cipher.doFinal(plainText);
             // Decrypt the message, given derived key
-            HashingUtils.printByteArray("CipherText", cipherText);
+            HashUtils.printBytes("CipherText", cipherText);
             cipher.init(Cipher.DECRYPT_MODE, key);
         }
 
         byte[] decryptedText = cipher.doFinal(cipherText);
-        HashingUtils.printByteArray("DecryptedText", decryptedText);
+        HashUtils.printBytes("DecryptedText", decryptedText);
     }
 
     public static void main(String[] args) {
