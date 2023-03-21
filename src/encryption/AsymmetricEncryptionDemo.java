@@ -54,7 +54,7 @@ public class AsymmetricEncryptionDemo {
             signText(4096, "Hello World!");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
                  BadPaddingException | SignatureException e) {
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

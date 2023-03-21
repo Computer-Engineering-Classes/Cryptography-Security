@@ -26,19 +26,19 @@ public class SymmetricEncryptionDemo {
             random.nextBytes(iv);
             IvParameterSpec ivSpec = new IvParameterSpec(iv);
             HashUtils.printBytes("IvSpec", ivSpec.getIV());
-            cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
             // Encrypt the message
+            cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
             cipherText = cipher.doFinal(plainText);
             HashUtils.printBytes("CipherText", cipherText);
             // Decrypt the message, given derived key and initialization vector
             cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
         } else {
             // ECB doesn't require an IV
-            cipher.init(Cipher.ENCRYPT_MODE, key);
             // Encrypt the message
+            cipher.init(Cipher.ENCRYPT_MODE, key);
             cipherText = cipher.doFinal(plainText);
-            // Decrypt the message, given derived key
             HashUtils.printBytes("CipherText", cipherText);
+            // Decrypt the message, given derived key
             cipher.init(Cipher.DECRYPT_MODE, key);
         }
 
@@ -54,7 +54,7 @@ public class SymmetricEncryptionDemo {
             testSymmetricEncryption(192, "AES/CBC/PKCS5Padding");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
                  BadPaddingException | InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

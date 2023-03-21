@@ -6,18 +6,24 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashDemo {
-    public static void hashingTextDemo() throws NoSuchAlgorithmException, IOException {
+    public static void hashingTextDemo(String algorithm) throws NoSuchAlgorithmException, IOException {
         System.out.println("Directional:");
-        hashText("The quick brown fox jumps over the lazy dog.");
+        hashText("The quick brown fox jumps over the lazy dog.", algorithm);
 
-        System.out.println("Deterministic:");
-        hashText("The quick brown fox jumps over the lazy dog.");
+        System.out.println("\nDeterministic:");
+        hashText("The quick brown fox jumps over the lazy dog.", algorithm);
 
-        System.out.println("Pseudorandom:");
-        hashText("The quick brown fox jumps ower the lazy dog.");
+        System.out.println("\nPseudorandom:");
+        hashText("The quick brown fox jumps ower the lazy dog.", algorithm);
 
-        System.out.println("Fixed length:");
-        hashText("The quick brown fox jumps over the lazy dog and the lazy cat.");
+        System.out.println("\nFixed length:");
+        hashText("The quick brown fox jumps over the lazy dog and the lazy cat.", algorithm);
+    }
+
+    public static void hashingFileDemo(String algorithm) throws NoSuchAlgorithmException, IOException {
+        String fileName = "src\\hashing\\HashDemo.java";
+        System.out.println("File: " + fileName);
+        System.out.println("Checksum: " + hashFile(fileName, algorithm));
     }
 
     private static String hashFile(String fileName, String algorithm) throws NoSuchAlgorithmException, IOException {
@@ -33,8 +39,8 @@ public class HashDemo {
         return HashUtils.bytesToString(digest);
     }
 
-    private static void hashText(String s) throws NoSuchAlgorithmException {
-        MessageDigest digester = MessageDigest.getInstance("SHA-256");
+    private static void hashText(String s, String algorithm) throws NoSuchAlgorithmException {
+        MessageDigest digester = MessageDigest.getInstance(algorithm);
         byte[] input = s.getBytes();
         byte[] digest = digester.digest(input);
         HashUtils.printBytes("Digest", digest);
@@ -42,12 +48,11 @@ public class HashDemo {
 
     public static void main(String[] args) {
         try {
-            hashingTextDemo();
-            String fileName = "src\\hashing\\HashDemo.java";
-            System.out.println("File: " + fileName);
-            System.out.println("\nSHA-256: " + hashFile(fileName, "SHA-256"));
+            hashingTextDemo("SHA-256");
+            System.out.println();
+            hashingFileDemo("SHA-256");
         } catch (NoSuchAlgorithmException | IOException e) {
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

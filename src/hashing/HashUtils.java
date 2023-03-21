@@ -11,8 +11,8 @@ public class HashUtils {
         for (byte b : array) {
             sb.append(String.format("%02x", b));
         }
-        System.out.printf("\n%s: %s", s, sb);
-        System.out.printf("\nSize: %d bits\n", array.length * 8);
+        System.out.printf("%s: %s\n", s, sb);
+        System.out.printf("Size: %d bits\n", array.length * 8);
     }
 
     static public String bytesToString(byte[] array) {
