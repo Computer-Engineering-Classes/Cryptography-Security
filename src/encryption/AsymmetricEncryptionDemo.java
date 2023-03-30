@@ -6,7 +6,10 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.security.*;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 
 public class AsymmetricEncryptionDemo {
     public static void encryptText(int keysize, String plainText) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
@@ -27,33 +30,13 @@ public class AsymmetricEncryptionDemo {
         System.out.println("Decrypted Text: " + new String(decryptedText));
     }
 
-    public static void signText(int keysize, String plainText) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(keysize);
-        KeyPair keyPair = keyGen.generateKeyPair();
-
-        // Sign the message
-        Signature signature = Signature.getInstance("SHA256withRSA");
-        signature.initSign(keyPair.getPrivate());
-        signature.update(plainText.getBytes());
-        byte[] signatureBytes = signature.sign();
-        HashUtils.printBytes("Signature", signatureBytes);
-
-        // Verify the message
-        signature.initVerify(keyPair.getPublic());
-        signature.update(plainText.getBytes());
-        boolean verified = signature.verify(signatureBytes);
-        System.out.println("Verified: " + verified);
-    }
-
     public static void main(String[] args) {
         try {
             System.out.println("RSA 4096 Encrypt");
             encryptText(4096, "Hello World!");
             System.out.println("\nRSA 4096 Sign");
-            signText(4096, "Hello World!");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
-                 BadPaddingException | SignatureException e) {
+                 BadPaddingException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
